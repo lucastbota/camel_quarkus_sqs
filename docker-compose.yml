@@ -1,0 +1,19 @@
+version: '3.9'
+
+services:
+  localstack:
+    image: localstack/localstack
+    ports:
+      - 4566:4566
+      - 4576:4576
+    environment:
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - SERVICES=sns,sqs
+      - DATA_DIR=/tmp/localstack/data
+      - AWS_ACCESS_KEY_ID=key101
+      - AWS_SECRET_ACCESS_KEY=secret101
+      - AWS_DEFAULT_REGION=sa-east-1
+      - AWS_DEFAULT_OUTPUT=json
+      - DEBUG=1
+    volumes:
+      - ./localstack/docker-entrypoint.sh:/docker-entrypoint-initaws.d/docker-entrypoint.sh

@@ -5,10 +5,10 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import org.jboss.logging.Logger;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import br.com.credit.dto.RechargeDTO;
 import br.com.credit.enums.CompanyEnum;
 import br.com.credit.service.EventService;
@@ -35,7 +35,7 @@ public class EventSender {
 
     try {
       eventService.send(dto, type);
-    } catch (JsonProcessingException e) {
+    } catch (Exception e) {
       LOGGER.error(e);
     }
   }

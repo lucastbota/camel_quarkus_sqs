@@ -1,8 +1,9 @@
 package br.com.credit.service.sns;
 
 import java.util.Map;
-import javax.enterprise.context.Dependent;
-import javax.inject.Inject;
+
+import jakarta.enterprise.context.Dependent;
+import jakarta.inject.Inject;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.logging.Logger;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -37,6 +38,7 @@ public class SnsEventService implements EventService {
                 .messageAttributes(Map.of("company",
                     MessageAttributeValue.builder()
                         .stringValue(typeEnum.getAcronym())
+                            .dataType("String")
                         .build()))
                 .build());
     

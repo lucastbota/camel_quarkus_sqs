@@ -1,19 +1,26 @@
 version: '3.9'
 
 services:
+  alpine-stack:
+    image: alpine:3.14
+    volumes:
+      - "./localstack:/utils"
+    command: >
+      sed -i -e 's/\r$$//' /utils/docker-entrypoint.sh
+
   localstack:
     image: localstack/localstack
+    depends_on:
+      - alpine-stack
     ports:
-      - 4566:4566
-      - 4576:4576
+      - '127.0.0.1:4566:4566'
     environment:
       - DOCKER_HOST=unix:///var/run/docker.sock
       - SERVICES=sns,sqs
-      - DATA_DIR=/tmp/localstack/data
-      - AWS_ACCESS_KEY_ID=key101
+      - AWS_ACCESS_KEY_ID=key
       - AWS_SECRET_ACCESS_KEY=secret101
       - AWS_DEFAULT_REGION=sa-east-1
-      - AWS_DEFAULT_OUTPUT=json
+      - AWS_DEFAULT_OUTPUT=table
       - DEBUG=1
     volumes:
-      - ./localstack/docker-entrypoint.sh:/docker-entrypoint-initaws.d/docker-entrypoint.sh
+      - ./localstack/docker-entrypoint.sh:/etc/localstack/init/ready.d/init-aws.sh
